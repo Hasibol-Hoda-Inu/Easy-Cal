@@ -1,4 +1,7 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+
+import '../../../../application/app_colors.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -23,21 +26,65 @@ class _LoginState extends State<Login> {
             Spacer(),
             Icon(
               Icons.camera_alt_outlined,
-              color: Colors.green,
+              color: AppColors.themeColor,
               size: 76,
             ),
-            Text("Welcome to Food Tracker"),
-            Text("Track your meals effortlessly, Snap a photo, and we will handle the rest."),
-            ElevatedButton(
-                onPressed: (){},
-                child: Text("Continue with Google"),
+            SizedBox(height: 20,),
+            Text("Welcome to Food Tracker",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 36
+            ),),
+            Text("Track your meals effortlessly, Snap a photo, and we will handle the rest.",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 18,
+              ),
             ),
-            ElevatedButton(
-                onPressed: (){},
-                child: Text("Continue with Apple"),
+            SizedBox(height: 30,),
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                  onPressed: (){},
+                  child: Text("Continue with Google", style: TextStyle(fontSize: 18),),
+              ),
+            ),
+            SizedBox(height: 10,),
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                  onPressed: (){},
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.black87,
+                    foregroundColor: Colors.white
+                  ),
+                  child: Text("Continue with Apple", style: TextStyle(fontSize: 18)),
+              ),
             ),
             Spacer(),
-            Text("By continuing, you agree to our Terms of Service and Privacy Policy"),
+            RichText(
+              textAlign: TextAlign.center,
+              text: TextSpan(
+                style: TextStyle(
+                  color: Colors.black87
+                ),
+                children: [
+                  TextSpan(text: "By continuing, you agree to our"),
+                  TextSpan(
+                      text: " Terms of Service",
+                      style: TextStyle(color: AppColors.themeColor, fontWeight: FontWeight.bold),
+                      recognizer: TapGestureRecognizer()..onTap,
+                  ),
+                  TextSpan(text: " and"),
+                  TextSpan(
+                      text: " Privacy Policy",
+                      style: TextStyle(color: AppColors.themeColor, fontWeight: FontWeight.bold),
+                      recognizer: TapGestureRecognizer()..onTap,
+                  ),
+                ]
+              ),
+            ),
           ],
         ),
       )
