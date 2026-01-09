@@ -8,7 +8,11 @@ class BmrCalculator extends StatefulWidget {
 }
 
 class _BmrCalculatorState extends State<BmrCalculator> {
-  final _heightController = TextEditingController();
+
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  final _feetController = TextEditingController();
+  final _inchesController = TextEditingController();
   final _weightController = TextEditingController();
   final _ageController = TextEditingController();
 
@@ -17,8 +21,12 @@ class _BmrCalculatorState extends State<BmrCalculator> {
 
   void _calculateBMR() {
     double weight = double.tryParse(_weightController.text) ?? 0;
-    double height = double.tryParse(_heightController.text) ?? 0;
+    double feet = double.tryParse(_feetController.text) ?? 0;
+    double inches = double.tryParse(_inchesController.text) ?? 0;
     int age = int.tryParse(_ageController.text) ?? 0;
+
+    double totalInches = (feet * 12) + inches;
+    double height = totalInches * 0.0254;
 
     if (weight > 0 && height > 0 && age > 0) {
       setState(() {
@@ -30,6 +38,8 @@ class _BmrCalculatorState extends State<BmrCalculator> {
         }
       });
     }
+
+    /// TODO: Have to add activity level.
   }
 
   @override
@@ -44,7 +54,6 @@ class _BmrCalculatorState extends State<BmrCalculator> {
         padding: const EdgeInsets.all(20),
         child: Column(
           children: [
-            // Gender Selection
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -64,11 +73,22 @@ class _BmrCalculatorState extends State<BmrCalculator> {
               ],
             ),
             const SizedBox(height: 30),
-
-            // Input Fields
-            _buildInput(_ageController, "Age", "years"),
-            _buildInput(_heightController, "Height", "cm"),
-            _buildInput(_weightController, "Weight", "kg"),
+            Form(
+              key: _formKey,
+              child: Column(
+                children: [
+                  _buildInput(_ageController, "Age", "years"),
+                  Row(
+                    spacing: 14,
+                    children: [
+                      Expanded(child: _buildInput(_feetController, "Feet", "feet"),),
+                      Expanded(child: _buildInput(_inchesController, "Inches", "inches"),),
+                    ],
+                  ),
+                  _buildInput(_weightController, "Weight", "kg"),
+                ],
+              ),
+            ),
 
             const SizedBox(height: 30),
 
@@ -110,7 +130,6 @@ class _BmrCalculatorState extends State<BmrCalculator> {
     );
   }
 
-  // Helper for Input Fields
   Widget _buildInput(
     TextEditingController controller,
     String label,
@@ -118,7 +137,7 @@ class _BmrCalculatorState extends State<BmrCalculator> {
   ) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 15),
-      child: TextField(
+      child: TextFormField(
         controller: controller,
         keyboardType: TextInputType.number,
         decoration: InputDecoration(
@@ -126,11 +145,15 @@ class _BmrCalculatorState extends State<BmrCalculator> {
           suffixText: unit,
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(15)),
         ),
+        validator: (value) {
+          if (value == null || value.isEmpty) return "Enter $label";
+          if (double.tryParse(value) == null) return "Invalid";
+          return null;
+        },
       ),
     );
   }
 
-  // Helper for Gender Selection
   Widget _genderTile(
     String title,
     IconData icon,

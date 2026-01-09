@@ -6,7 +6,7 @@ Ai Nutrition Tracker
 - State-Manger: Provider
 - Routing: Go-Router
 - Auth: Firebase Auth
-- Ai: Firebase CodeLab
+- Ai: Firebase Ai Studio
 - BAAS: Supabase
 
 

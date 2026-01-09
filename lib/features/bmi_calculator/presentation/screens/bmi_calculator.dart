@@ -6,7 +6,7 @@ class BmiCalculator extends StatefulWidget {
 }
 
 class _BmiCalculatorState extends State<BmiCalculator> {
-  final _formKey = GlobalKey<FormState>(); // Needed for Form validation
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   final _feetController = TextEditingController();
   final _inchesController = TextEditingController();
@@ -115,7 +115,7 @@ class _BmiCalculatorState extends State<BmiCalculator> {
     return Container(
       width: double.infinity,
       margin: const EdgeInsets.only(top: 40),
-      padding: EdgeInsets.all(20),
+      padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         color: Colors.purple.withOpacity(0.1),
         borderRadius: BorderRadius.circular(20),

@@ -72,7 +72,7 @@ class _HomescreenState extends State<Homescreen> {
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       color: Colors.green[50],
-                      border: Border.all(color: AppColors.themeColor, width: 4.0),
+                      border: Border.all(color: AppColors.themeColor, width: 8.0),
                     ),
                     child: Column(
                       children: [
@@ -84,7 +84,7 @@ class _HomescreenState extends State<Homescreen> {
                           ),
                         ),
                         const Text(
-                          "kCal",
+                          "kcal",
                           style: TextStyle(
                             fontSize: 16.0,
                             fontWeight: FontWeight.w500,
@@ -115,7 +115,7 @@ class _HomescreenState extends State<Homescreen> {
                     ),
                     child: GridView.count(
                       shrinkWrap: true,
-                      crossAxisCount: 2,
+                      crossAxisCount: 3,
                       crossAxisSpacing: 12,
                       mainAxisSpacing: 12,
                       children: [
@@ -136,11 +136,9 @@ class _HomescreenState extends State<Homescreen> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-          onPressed: _takePhoto,
-
+        onPressed: _takePhoto,
         child: const Icon(
           Icons.camera_alt,
-
         ),
       ),
     );
@@ -148,7 +146,7 @@ class _HomescreenState extends State<Homescreen> {
 
   Widget _macroTile(String label, String value, Color color) {
     return Container(
-      height: 80,
+      height: 60,
       decoration: BoxDecoration(
         color: color.withAlpha(77),
         borderRadius: BorderRadius.circular(15),
@@ -171,10 +169,6 @@ class _HomescreenState extends State<Homescreen> {
         ],
       ),
     );
-  }
-
-  void takePhoto() {
-    _takePhoto();
   }
 
   Future<void> _takePhoto() async {
