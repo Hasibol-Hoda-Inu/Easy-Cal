@@ -1,6 +1,7 @@
 import 'package:easy_cal/application/app_theme_data.dart';
 import 'package:easy_cal/features/auth/presentation/screen/login.dart';
-import 'package:easy_cal/homeScreen.dart';
+import 'package:easy_cal/features/bmr_calculator/presentation/screens/bmr_calculator.dart';
+import 'package:easy_cal/features/common/presentation/screens/main_bottom_nav_screen.dart';
 import 'package:flutter/material.dart';
 
 class EasyCal extends StatelessWidget {
@@ -13,7 +14,7 @@ class EasyCal extends StatelessWidget {
       theme: AppThemeData.lightThemeData,
       darkTheme: AppThemeData.darkThemeData,
       themeMode: ThemeMode.light,
-      home: Login(),
+      home: const MainBottomNavScreen(),
     );
   }
 }

@@ -23,34 +23,34 @@ class _LoginState extends State<Login> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Spacer(),
-            Icon(
+            const Spacer(),
+            const Icon(
               Icons.camera_alt_outlined,
               color: AppColors.themeColor,
               size: 76,
             ),
-            SizedBox(height: 20,),
-            Text("Welcome to Food Tracker",
+            const SizedBox(height: 20,),
+            const Text("Welcome to Food Tracker",
               textAlign: TextAlign.center,
               style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 36
             ),),
-            Text("Track your meals effortlessly, Snap a photo, and we will handle the rest.",
+            const Text("Track your meals effortlessly, Snap a photo, and we will handle the rest.",
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 18,
               ),
             ),
-            SizedBox(height: 30,),
+            const SizedBox(height: 30,),
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
                   onPressed: (){},
-                  child: Text("Continue with Google", style: TextStyle(fontSize: 18),),
+                  child: const Text("Continue with Google", style: TextStyle(fontSize: 18),),
               ),
             ),
-            SizedBox(height: 10,),
+            const SizedBox(height: 10,),
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
@@ -59,10 +59,10 @@ class _LoginState extends State<Login> {
                     backgroundColor: Colors.black87,
                     foregroundColor: Colors.white
                   ),
-                  child: Text("Continue with Apple", style: TextStyle(fontSize: 18)),
+                  child: const Text("Continue with Apple", style: TextStyle(fontSize: 18)),
               ),
             ),
-            Spacer(),
+            const Spacer(),
             RichText(
               textAlign: TextAlign.center,
               text: TextSpan(
