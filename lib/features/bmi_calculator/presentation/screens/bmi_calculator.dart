@@ -48,7 +48,7 @@ class _BmiCalculatorState extends State<BmiCalculator> {
       appBar: AppBar(
         title: const Text("BMI Calculator"),
         centerTitle: true,
-        backgroundColor: Colors.purple,
+        backgroundColor: Colors.orange,
         foregroundColor: Colors.white,
       ),
       body: SingleChildScrollView(
@@ -63,7 +63,7 @@ class _BmiCalculatorState extends State<BmiCalculator> {
                 style: TextStyle(
                   fontSize: 22,
                   fontWeight: FontWeight.bold,
-                  color: Colors.purple,
+                  color: Colors.orange,
                 ),
               ),
               const SizedBox(height: 20),
@@ -93,7 +93,7 @@ class _BmiCalculatorState extends State<BmiCalculator> {
                 child: ElevatedButton(
                   onPressed: _calculateBMI,
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.purple,
+                    backgroundColor: Colors.orange,
                   ),
                   child: const Text(
                     "Calculate BMI",
@@ -117,22 +117,22 @@ class _BmiCalculatorState extends State<BmiCalculator> {
       margin: const EdgeInsets.only(top: 40),
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: Colors.purple.withOpacity(0.1),
+        color: Colors.orange[100],
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: Colors.purple),
+        border: Border.all(color: Colors.orange),
       ),
       child: Column(
         children: [
           const Text(
             "Your BMI",
-            style: TextStyle(fontSize: 18, color: Colors.purple),
+            style: TextStyle(fontSize: 18, color: Colors.orange),
           ),
           Text(
             _bmiResult!.toStringAsFixed(1),
             style: const TextStyle(
               fontSize: 60,
               fontWeight: FontWeight.bold,
-              color: Colors.purple,
+              color: Colors.orange,
             ),
           ),
           Text(
@@ -140,15 +140,14 @@ class _BmiCalculatorState extends State<BmiCalculator> {
             style: const TextStyle(
               fontSize: 22,
               fontWeight: FontWeight.w500,
-              color: Colors.purple,
+              color: Colors.orange,
             ),
           ),
         ],
       ),
     );
   }
-
-  // Helper for TextFormFields with Validation
+  
   Widget _buildTextField(
     TextEditingController controller,
     String label,
@@ -160,12 +159,6 @@ class _BmiCalculatorState extends State<BmiCalculator> {
       decoration: InputDecoration(
         labelText: label,
         suffixText: suffix,
-        labelStyle: const TextStyle(color: Colors.purple),
-        focusedBorder: OutlineInputBorder(
-          borderSide: const BorderSide(color: Colors.purple, width: 2),
-          borderRadius: BorderRadius.circular(12),
-        ),
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
       ),
       validator: (value) {
         if (value == null || value.isEmpty) return "Enter $label";

@@ -1,6 +1,8 @@
 import 'package:easy_cal/application/app_colors.dart';
+import 'package:easy_cal/data/bmr_data.dart';
 import 'package:flutter/material.dart';
-import 'package:easy_cal/data_model/nutrition_data_model.dart';
+
+import '../../../../data_models/nutrition_data_model.dart';
 
 class HistoryScreen extends StatefulWidget {
   final List<FoodNutrition> dailyHistory;
@@ -12,8 +14,22 @@ class HistoryScreen extends StatefulWidget {
 }
 
 class _HistoryScreenState extends State<HistoryScreen> {
+  double? _bmr;
+
   @override
-  int get _totalCalories => widget.dailyHistory.fold(0, (sum, item) => sum + item.calories);
+  void initState() {
+    super.initState();
+    BmrData.getBmrData().then((_) {
+      setState(() {
+        _bmr = BmrData.bmr!;
+      });
+    });
+  }
+
+  int get _totalCalories =>
+      widget.dailyHistory.fold(0, (sum, item) => sum + item.calories);
+
+  double get _caloryConsumed => (_bmr ?? 0) - _totalCalories;
 
   @override
   Widget build(BuildContext context) {
@@ -34,11 +50,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(
-            Icons.history,
-            size: 100,
-            color: Colors.grey[400],
-          ),
+          Icon(Icons.history, size: 100, color: Colors.grey[400]),
           const SizedBox(height: 20),
           Text(
             "No meals logged today",
@@ -51,10 +63,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
           const SizedBox(height: 10),
           Text(
             "Start by taking a photo of your meal!",
-            style: TextStyle(
-              fontSize: 16,
-              color: Colors.grey[500],
-            ),
+            style: TextStyle(fontSize: 16, color: Colors.grey[500]),
           ),
         ],
       ),
@@ -106,27 +115,34 @@ class _HistoryScreenState extends State<HistoryScreen> {
                   ),
                 ],
               ),
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //   children: [
-              //     const Text(
-              //       "${_bmr - _totalCalories} kcal",
-              //       style: TextStyle(
-              //         color: Colors.white,
-              //         fontSize: 20,
-              //         fontWeight: FontWeight.bold,
-              //       ),
-              //     ),
-              //     const Text(
-              //       "Remains",
-              //       style: TextStyle(
-              //         color: Colors.white,
-              //         fontSize: 24,
-              //         fontWeight: FontWeight.bold,
-              //       ),
-              //     ),
-              //   ],
-              // ),
+              const Divider(color: Colors.white54),
+              if (_bmr != null) ...[
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "${(_caloryConsumed).toStringAsFixed(0)} kcal",
+                      style: TextStyle(
+                        color: (_caloryConsumed) < 0
+                            ? Colors.redAccent[100]
+                            : Colors.white,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text(
+                      (_caloryConsumed) < 0 ? "OverEtan!" : "Remains",
+                      style: TextStyle(
+                        color: (_caloryConsumed) < 0
+                            ? Colors.redAccent[100]
+                            : Colors.white,
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
             ],
           ),
         ),

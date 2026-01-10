@@ -3,11 +3,12 @@ import 'dart:typed_data';
 
 import 'package:easy_cal/application/app_colors.dart';
 import 'package:easy_cal/application/const/api_key.dart';
-import 'package:easy_cal/data_model/nutrition_data_model.dart';
 import 'package:flutter/material.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:image/image.dart' as img;
 import 'package:image_picker/image_picker.dart';
+
+import '../../../../data_models/nutrition_data_model.dart';
 
 class Homescreen extends StatefulWidget {
   final Function(FoodNutrition)? onNutritionAnalyzed;

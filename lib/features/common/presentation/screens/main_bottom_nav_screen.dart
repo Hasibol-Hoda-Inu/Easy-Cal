@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:easy_cal/data_model/nutrition_data_model.dart';
+
 import 'package:easy_cal/features/home/presentation/screens/homeScreen.dart';
 import 'package:easy_cal/features/history/presentation/screen/history_screen.dart';
 
-import '../../../../application/app_colors.dart';
+import '../../../../data_models/nutrition_data_model.dart';
 import '../../../bmi_calculator/presentation/screens/bmi_calculator.dart';
 import '../../../bmr_calculator/presentation/screens/bmr_calculator.dart';
 

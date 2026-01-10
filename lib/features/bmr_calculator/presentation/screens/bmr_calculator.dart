@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../application/app_colors.dart';
+import '../../../../data/bmr_data.dart';
 
 class BmrCalculator extends StatefulWidget {
   @override
@@ -18,6 +19,7 @@ class _BmrCalculatorState extends State<BmrCalculator> {
 
   bool isMale = true;
   double? _bmrResult;
+  String? _dropDownValue;
 
   void _calculateBMR() {
     double weight = double.tryParse(_weightController.text) ?? 0;
@@ -26,7 +28,7 @@ class _BmrCalculatorState extends State<BmrCalculator> {
     int age = int.tryParse(_ageController.text) ?? 0;
 
     double totalInches = (feet * 12) + inches;
-    double height = totalInches * 0.0254;
+    double height = totalInches * 2.54;
 
     if (weight > 0 && height > 0 && age > 0) {
       setState(() {
@@ -36,10 +38,24 @@ class _BmrCalculatorState extends State<BmrCalculator> {
         } else {
           _bmrResult = (10 * weight) + (6.25 * height) - (5 * age) - 161;
         }
+
+        if(_dropDownValue != null){
+          _bmrResult = _bmrResult! * double.parse(_dropDownValue!);
+        }
+
+        BmrData.saveBmrData(_bmrResult!);
       });
     }
+  }
 
-    /// TODO: Have to add activity level.
+  @override
+  void initState() {
+    super.initState();
+    BmrData.getBmrData().then((_){
+      setState(() {
+        _bmrResult = BmrData.bmr;
+      });
+    });
   }
 
   @override
@@ -86,6 +102,39 @@ class _BmrCalculatorState extends State<BmrCalculator> {
                     ],
                   ),
                   _buildInput(_weightController, "Weight", "kg"),
+                  DropdownButtonFormField(
+                      items: const [
+                        DropdownMenuItem(
+                          value: "1.2",
+                          child: Text("Sedentary (Office job)"),
+                        ),
+                        DropdownMenuItem(
+                          value: "1.375",
+                          child: Text("Lightly Active (1-2 days/week)"),
+                        ),
+                        DropdownMenuItem(
+                          value: "1.55",
+                          child: Text("Moderately Active (3-5 days/week)"),
+                        ),
+                        DropdownMenuItem(
+                          value: "1.725",
+                          child: Text("Very Active (6-7 days/week)"),
+                        ),
+                        DropdownMenuItem(
+                          value: "1.9",
+                          child: Text("Extremely Active (Athlete)"),
+                        ),
+                      ],
+                    decoration: const InputDecoration(
+                      labelText: "Select Activity level",
+                      prefixIcon: Icon(Icons.directions_run_rounded),
+                    ),
+                    isExpanded: true,
+                    icon: const Icon(Icons.keyboard_arrow_right, color: Colors.orange,),
+                    borderRadius: BorderRadius.circular(14),
+                    initialValue: _dropDownValue,
+                    onChanged: _dropDownCallBack,
+                  ),
                 ],
               ),
             ),
@@ -93,7 +142,7 @@ class _BmrCalculatorState extends State<BmrCalculator> {
             const SizedBox(height: 30),
 
             ElevatedButton(
-              onPressed: _calculateBMR,
+              onPressed: _onTap,
               style: ElevatedButton.styleFrom(
                 minimumSize: const Size(double.infinity, 50),
                 backgroundColor: Colors.orange,
@@ -130,6 +179,29 @@ class _BmrCalculatorState extends State<BmrCalculator> {
     );
   }
 
+  void _onTap(){
+    if(_formKey.currentState!.validate()){
+      _calculateBMR();
+      FocusScope.of(context).unfocus();
+    }
+
+    _ageController.clear();
+    _feetController.clear();
+    _inchesController.clear();
+    _weightController.clear();
+    setState(() {
+      _dropDownValue = null;
+    });
+  }
+
+  void _dropDownCallBack(String? value) {
+    if(value is String){
+      setState(() {
+        _dropDownValue = value;
+      });
+    }
+  }
+
   Widget _buildInput(
     TextEditingController controller,
     String label,
@@ -143,7 +215,6 @@ class _BmrCalculatorState extends State<BmrCalculator> {
         decoration: InputDecoration(
           labelText: label,
           suffixText: unit,
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(15)),
         ),
         validator: (value) {
           if (value == null || value.isEmpty) return "Enter $label";

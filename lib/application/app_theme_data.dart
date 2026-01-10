@@ -5,13 +5,30 @@ class AppThemeData {
   static ThemeData get lightThemeData{
     return ThemeData(
       colorSchemeSeed: AppColors.themeColor,
+
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
-          padding: EdgeInsets.symmetric(vertical: 16),
+          padding: const EdgeInsets.symmetric(vertical: 16),
         )
-      )
+      ),
+
+      inputDecorationTheme: InputDecorationTheme(
+        border: OutlineInputBorder(
+          borderSide: BorderSide(color: Colors.grey.shade300),
+          borderRadius: BorderRadius.circular(10),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide(color: Colors.grey.shade300),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide(color: Colors.grey.shade300),
+        ),
+      ),
     );
   }
+
   static ThemeData get darkThemeData{
     return ThemeData(
       colorSchemeSeed: AppColors.themeColor,
